@@ -1,0 +1,47 @@
+{
+  "weighIns": [
+    {
+      "id": "1765693548863",
+      "createdAt": "2025-12-14T06:25:48.863Z",
+      "galpao": "Galpão 1",
+      "batches": [
+        {
+          "numFrangos": 20,
+          "pesoTotalLote": 11.47
+        },
+        {
+          "numFrangos": 20,
+          "pesoTotalLote": 11.58
+        },
+        {
+          "numFrangos": 20,
+          "pesoTotalLote": 11.67
+        },
+        {
+          "numFrangos": 20,
+          "pesoTotalLote": 11.45
+        },
+        {
+          "numFrangos": 20,
+          "pesoTotalLote": 11.76
+        },
+        {
+          "numFrangos": 20,
+          "pesoTotalLote": 11.39
+        },
+        {
+          "numFrangos": 20,
+          "pesoTotalLote": 12
+        },
+        {
+          "numFrangos": 20,
+          "pesoTotalLote": 11.87
+        }
+      ],
+      "numSacos": 8,
+      "numFrangosPesados": 160,
+      "pesoTotalFrangos": 93.19,
+      "pesoMedio": 0.5674374999999999
+    }
+  ]
+}
