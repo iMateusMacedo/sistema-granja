@@ -99,7 +99,7 @@ const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFi
         <div className="space-y-4">
           <div>
             <label className={`block text-sm font-semibold ${theme === 'light' ? 'text-black' : 'text-gray-300'}`}>Adicionar Peso do Saco</label>
-            <input type="number" value={pesoTotalLote} onChange={(e) => setPesoTotalLote(e.target.value)} className={`w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 transition ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500' : 'bg-gray-900 border-gray-700 text-gray-100 focus:ring-amber-500'}`} placeholder="Ex: 125.5" step="0.1" />
+            <input type="number" value={pesoTotalLote} onChange={(e) => setPesoTotalLote(e.target.value)} className={`w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 transition ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500 text-black' : 'bg-gray-900 border-gray-700 text-gray-100 focus:ring-amber-500'}`} placeholder="Ex: 125.5" step="0.1" />
           </div>
           <div>
             <label className={`block text-sm font-semibold ${theme === 'light' ? 'text-black' : 'text-gray-300'}`}>Adicionar Número de Frangos</label>
@@ -109,7 +109,7 @@ const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFi
                 value={numFrangos} 
                 onChange={(e) => setNumFrangos(e.target.value)} 
                 disabled={fixedFrangos !== null} 
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 transition ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500' : 'bg-gray-900 border-gray-700 text-gray-100 focus:ring-amber-500'} disabled:bg-gray-300 disabled:cursor-not-allowed dark:disabled:bg-gray-700`} 
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 transition ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500 text-black' : 'bg-gray-900 border-gray-700 text-gray-100 focus:ring-amber-500'} disabled:bg-gray-300 disabled:cursor-not-allowed dark:disabled:bg-gray-700`} 
                 placeholder="Ex: 50" 
               />
               <button 
