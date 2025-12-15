@@ -86,14 +86,16 @@ const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFi
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
       <div className={`${theme === 'light' ? 'bg-white' : 'bg-gray-800 border border-amber-500/20'} p-6 rounded-xl shadow-2xl w-full max-w-md transform transition-all `}>
-                <Image 
-                src={theme === 'light' ? '/GT PRETO.svg' : '/GT BRANCO.svg'}
-                alt="Logo Grupo Talento"
-                width={100}
-                height={100}
-                priority
-              />
-        <h2 className={`text-2xl font-bold ${theme === 'light' ? 'text-black' : 'text-amber-400'} mb-5`}>Adicionar Saco</h2>
+        <div className="flex justify-between items-center mb-5">
+          <h2 className={`text-2xl font-bold ${theme === 'light' ? 'text-black' : 'text-amber-400'}`}>Adicionar Saco</h2>
+          <Image 
+            src={theme === 'light' ? '/GT PRETO.svg' : '/GT BRANCO.svg'}
+            alt="Logo Grupo Talento"
+            width={80}
+            height={80}
+            priority
+          />
+        </div>
         <div className="space-y-4">
           <div>
             <label className={`block text-sm font-semibold ${theme === 'light' ? 'text-black' : 'text-gray-300'}`}>Adicionar Peso do Saco</label>
