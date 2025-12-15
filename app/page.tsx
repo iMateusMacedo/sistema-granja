@@ -10,6 +10,7 @@ const TrashIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w
 const SunIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 7.072l.707-.707a1 1 0 10-1.414-1.414l-.707.707a1 1 0 101.414 1.414zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" clipRule="evenodd" /></svg>;
 const MoonIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>;
 const LockClosedIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" /></svg>;
+const LockOpenIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a5 5 0 00-5 5v2H4a2 2 0 00-2 2v5a2 2 0 002 2h12a2 2 0 002-2v-5a2 2 0 00-2-2h-1V7a5 5 0 00-5-5zm0 2a3 3 0 00-3 3v2h6V7a3 3 0 00-3-3zm-3 7h6v5H7v-5z" /></svg>;
 
 // --- Next.js Image Component ---
 import Image from 'next/image';
@@ -18,54 +19,80 @@ import Image from 'next/image';
 interface BatchData { id: number; numFrangos: number; pesoTotalLote: number; }
 interface CalculationHistory { id: string; createdAt: string; galpao: string; batches: Omit<BatchData, 'id'>[]; numSacos: number; numFrangosPesados: number; pesoTotalFrangos: number; pesoMedio: number; }
 
-// --- Constants ---
 const galpoes = ["Galpão 1", "Galpão 2", "Galpão 3", "Galpão 4", "Galpão 5"];
 
 // --- Type definition for Theme ---
 type Theme = 'light' | 'dark';
 
 // --- Modal Component ---
-const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFixedFrangos, isFirstBatch }: { 
+const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFixedFrangos }: { 
   isOpen: boolean; 
   onClose: () => void; 
   onAddBatch: (batch: Omit<BatchData, 'id'>) => void; 
   theme: Theme;
   fixedFrangos: number | null;
   setFixedFrangos: (value: number | null) => void;
-  isFirstBatch: boolean;
 }) => {
   const [numFrangos, setNumFrangos] = useState('');
-  const [pesoTotalLote, setPesoTotalLote] = useState('');
-
-  useEffect(() => {
-    if (fixedFrangos !== null) {
-      setNumFrangos(fixedFrangos.toString());
-    } else {
-      setNumFrangos('');
-    }
-    setPesoTotalLote('');
-  }, [isOpen, fixedFrangos]); // 'isOpen' is needed here to re-trigger effect when modal opens
-
-  const handleConfirm = () => {
-    const batch = { numFrangos: parseInt(numFrangos, 10) || 0, pesoTotalLote: parseFloat(pesoTotalLote) || 0, };
-    if (batch.numFrangos > 0 && batch.pesoTotalLote > 0) {
-      onAddBatch(batch);
-      onClose();
-    } else {
-      alert("Por favor, preencha todos os campos com valores válidos.");
-    }
-  };
+    const [pesoTotalLote, setPesoTotalLote] = useState('');
   
-  const handleFixValue = () => {
-    const frangos = parseInt(numFrangos, 10);
-    if (frangos > 0) {
-      setFixedFrangos(frangos);
-    }
-  };
+    const handleConfirm = () => {
+      const batch = { numFrangos: parseInt(numFrangos, 10) || 0, pesoTotalLote: parseFloat(pesoTotalLote) || 0, };
+      if (batch.numFrangos > 0 && batch.pesoTotalLote > 0) {
+        onAddBatch(batch);
+        onClose();
+      } else {
+        alert("Por favor, preencha todos os campos com valores válidos.");
+      }
+    };
+  
+    useEffect(() => {
+      if (fixedFrangos !== null) {
+        setNumFrangos(fixedFrangos.toString());
+      } else {
+        setNumFrangos('');
+      }
+    }, [isOpen, fixedFrangos]); // 'isOpen' is needed here to re-trigger effect when modal opens
+  
+    useEffect(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+          handleConfirm();
+        }
+      };
+  
+      if (isOpen) {
+        window.addEventListener('keydown', handleKeyDown);
+      }
+  
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }, [isOpen, handleConfirm]);
+    
+    const handleFixValue = () => {
+      if (fixedFrangos !== null) {
+        // Se já estiver fixado, desfixar
+        setFixedFrangos(null);
+      } else {
+        // Se não estiver fixado, fixar o valor atual
+        const frangos = parseInt(numFrangos, 10);
+        if (frangos > 0) {
+          setFixedFrangos(frangos);
+        }
+      }
+    };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className={`${theme === 'light' ? 'bg-white' : 'bg-gray-800 border border-amber-500/20'} p-6 rounded-xl shadow-2xl w-full max-w-md transform transition-all`}>
+      <div className={`${theme === 'light' ? 'bg-white' : 'bg-gray-800 border border-amber-500/20'} p-6 rounded-xl shadow-2xl w-full max-w-md transform transition-all `}>
+                <Image 
+                src={theme === 'light' ? '/GT PRETO.svg' : '/GT BRANCO.svg'}
+                alt="Logo Grupo Talento"
+                width={100}
+                height={100}
+                priority
+              />
         <h2 className={`text-2xl font-bold ${theme === 'light' ? 'text-black' : 'text-amber-400'} mb-5`}>Adicionar Saco</h2>
         <div className="space-y-4">
           <div>
@@ -74,13 +101,22 @@ const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFi
           </div>
           <div>
             <label className={`block text-sm font-semibold ${theme === 'light' ? 'text-black' : 'text-gray-300'}`}>Adicionar Número de Frangos</label>
-            <div className="flex items-center gap-2">
-              <input type="number" value={numFrangos} onChange={(e) => setNumFrangos(e.target.value)} disabled={fixedFrangos !== null} className={`w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 transition ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500' : 'bg-gray-900 border-gray-700 text-white focus:ring-amber-500'} disabled:bg-gray-300 disabled:cursor-not-allowed dark:disabled:bg-gray-700`} placeholder="Ex: 50" />
-              {isFirstBatch && fixedFrangos === null && (
-                <button onClick={handleFixValue} title="Fixar este valor para os próximos sacos" className={`mt-1 p-2 rounded-lg transition-colors ${theme === 'light' ? 'bg-gray-200 hover:bg-gray-300' : 'bg-gray-700 hover:bg-gray-600'}`}>
-                  <LockClosedIcon/>
-                </button>
-              )}
+            <div className="flex items-center gap-2 mt-1">
+              <input 
+                type="number" 
+                value={numFrangos} 
+                onChange={(e) => setNumFrangos(e.target.value)} 
+                disabled={fixedFrangos !== null} 
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 transition ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500' : 'bg-gray-900 border-gray-700 text-white focus:ring-amber-500'} disabled:bg-gray-300 disabled:cursor-not-allowed dark:disabled:bg-gray-700`} 
+                placeholder="Ex: 50" 
+              />
+              <button 
+                onClick={handleFixValue} 
+                title={fixedFrangos !== null ? "Desbloquear para alterar" : "Salvar e bloquear valor"}
+                className={`flex items-center justify-center w-12 h-8 rounded-full transition-colors ${fixedFrangos !== null ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+              >
+                <span className={`block w-6 h-6 rounded-full bg-white shadow-md transform transition-transform ${fixedFrangos !== null ? 'translate-x-3' : '-translate-x-3'}`} />
+              </button>
             </div>
           </div>
         </div>
@@ -138,9 +174,6 @@ export default function Home() {
   };
 
   const handleAddBatch = (batch: Omit<BatchData, 'id'>) => {
-    if (pendingBatches.length === 0 && !editingHistoryId && fixedFrangos === null) {
-      setFixedFrangos(batch.numFrangos);
-    }
     setPendingBatches(prev => [...prev, { ...batch, id: Date.now() }]);
     setCalculationResult(null);
   };
@@ -223,7 +256,6 @@ export default function Home() {
         theme={theme}
         fixedFrangos={fixedFrangos}
         setFixedFrangos={setFixedFrangos}
-        isFirstBatch={pendingBatches.length === 0 && !editingHistoryId}
       />}
       
       <div className={`min-h-screen font-sans transition-colors ${theme === 'light' ? 'bg-slate-100 text-slate-800' : 'bg-gray-900 text-gray-200'}`}>
@@ -254,7 +286,7 @@ export default function Home() {
                     <p className="font-bold">Modo de Edição</p>
                     <p className="text-sm">Você está editando um registro. Altere a lista, recalcule e atualize.</p>
                   </div>
-                )}
+                )} 
                 <div>
                   <label htmlFor="galpao" className={`block text-sm font-semibold mb-1 ${theme === 'light' ? 'text-slate-700' : 'text-gray-300'}`}>Galpão</label>
                   <select id="galpao" value={galpao} onChange={(e) => setGalpao(e.target.value)} className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-2 transition-colors ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500' : 'bg-gray-900 border-gray-700 text-white focus:ring-amber-500'} disabled:bg-gray-700`} disabled={editingHistoryId !== null}>
