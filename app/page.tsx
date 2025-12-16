@@ -21,15 +21,12 @@ interface CalculationHistory { id: string; createdAt: string; galpao: string; ba
 
 const galpoes = ["Galpão 1", "Galpão 2", "Galpão 3", "Galpão 4", "Galpão 5"];
 
-// --- Type definition for Theme ---
-type Theme = 'light' | 'dark';
 
 // --- Modal Component ---
-const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFixedFrangos }: { 
+const AddBatchModal = ({ isOpen, onClose, onAddBatch, fixedFrangos, setFixedFrangos }: { 
   isOpen: boolean; 
   onClose: () => void; 
   onAddBatch: (batch: Omit<BatchData, 'id'>) => void; 
-  theme: Theme;
   fixedFrangos: number | null;
   setFixedFrangos: (value: number | null) => void;
 }) => {
@@ -85,11 +82,11 @@ const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFi
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className={`${theme === 'light' ? 'bg-white' : 'bg-gray-800 border border-amber-500/20'} p-6 rounded-xl shadow-2xl w-full max-w-md transform transition-all `}>
+      <div className={`bg-white p-6 rounded-xl shadow-2xl w-full max-w-md transform transition-all `}>
         <div className="flex justify-between items-center mb-5">
-          <h2 className={`text-2xl font-bold ${theme === 'light' ? 'text-black' : 'text-amber-400'}`}>Adicionar Saco</h2>
+          <h2 className={`text-2xl font-bold text-black`}>Adicionar Saco</h2>
           <Image 
-            src={theme === 'light' ? '/GT PRETO.svg' : '/GT BRANCO.svg'}
+            src={'/GT PRETO.svg'}
             alt="Logo Grupo Talento"
             width={80}
             height={80}
@@ -98,24 +95,24 @@ const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFi
         </div>
         <div className="space-y-4">
           <div>
-            <label className={`block text-sm font-semibold ${theme === 'light' ? 'text-black' : 'text-gray-300'}`}>Adicionar Peso do Saco</label>
-            <input type="number" value={pesoTotalLote} onChange={(e) => setPesoTotalLote(e.target.value)} className={`w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 transition ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500 text-black' : 'bg-gray-900 border-gray-700 text-gray-100 focus:ring-amber-500'}`} placeholder="Ex: 125.5" step="0.1" />
+            <label className={`block text-sm font-semibold text-black`}>Adicionar Peso do Saco</label>
+            <input type="number" value={pesoTotalLote} onChange={(e) => setPesoTotalLote(e.target.value)} className={`w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 transition border-slate-300 focus:ring-indigo-500 text-black`} placeholder="Ex: 125.5" step="0.1" />
           </div>
           <div>
-            <label className={`block text-sm font-semibold ${theme === 'light' ? 'text-black' : 'text-gray-300'}`}>Adicionar Número de Frangos</label>
+            <label className={`block text-sm font-semibold text-black`}>Adicionar Número de Frangos</label>
             <div className="flex items-center gap-2 mt-1">
               <input 
                 type="number" 
                 value={numFrangos} 
                 onChange={(e) => setNumFrangos(e.target.value)} 
                 disabled={fixedFrangos !== null} 
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 transition ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500 text-black' : 'bg-gray-900 border-gray-700 text-gray-100 focus:ring-amber-500'} disabled:bg-gray-300 disabled:cursor-not-allowed dark:disabled:bg-gray-700`} 
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 transition border-slate-300 focus:ring-indigo-500 text-black disabled:bg-gray-300 disabled:cursor-not-allowed`} 
                 placeholder="Ex: 50" 
               />
               <button 
                 onClick={handleFixValue} 
                 title={fixedFrangos !== null ? "Desbloquear para alterar" : "Salvar e bloquear valor"}
-                className={`flex items-center justify-center w-12 h-8 rounded-full transition-colors ${fixedFrangos !== null ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+                className={`flex items-center justify-center w-12 h-8 rounded-full transition-colors ${fixedFrangos !== null ? 'bg-green-500' : 'bg-gray-300'}`}
               >
                 <span className={`block w-6 h-6 rounded-full bg-white shadow-md transform transition-transform ${fixedFrangos !== null ? 'translate-x-3' : '-translate-x-3'}`} />
               </button>
@@ -123,8 +120,8 @@ const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFi
           </div>
         </div>
         <div className="mt-8 flex justify-end space-x-4">
-          <button onClick={onClose} className={`px-5 py-2 font-semibold rounded-lg transition-colors ${theme === 'light' ? 'bg-slate-200 text-slate-800 hover:bg-slate-300' : 'bg-gray-700 text-gray-200 hover:bg-gray-600'}`}>Cancelar</button>
-          <button onClick={handleConfirm} className={`px-5 py-2 font-bold rounded-lg shadow-sm transition-all ${theme === 'light' ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-amber-500 text-black hover:bg-amber-400 hover:shadow-amber-500/20'}`}>Confirmar</button>
+          <button onClick={onClose} className={`px-5 py-2 font-semibold rounded-lg transition-colors bg-slate-200 text-slate-800 hover:bg-slate-300`}>Cancelar</button>
+          <button onClick={handleConfirm} className={`px-5 py-2 font-bold rounded-lg shadow-sm transition-all bg-indigo-600 text-white hover:bg-indigo-700`}>Confirmar</button>
         </div>
       </div>
     </div>
@@ -134,7 +131,6 @@ const AddBatchModal = ({ isOpen, onClose, onAddBatch, theme, fixedFrangos, setFi
 
 // --- Main Page Component ---
 export default function Home() {
-  const [theme, setTheme] = useState<Theme>('light');
   const [history, setHistory] = useState<CalculationHistory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -146,20 +142,8 @@ export default function Home() {
   const [calculationResult, setCalculationResult] = useState<{ totalSacos: number; totalFrangos: number; totalPeso: number; pesoMedio: number } | null>(null);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
     fetchHistory();
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
 
   const fetchHistory = async () => {
     try {
@@ -255,17 +239,16 @@ export default function Home() {
         isOpen={isAddModalOpen} // Explicitly pass isOpen
         onClose={() => setAddModalOpen(false)} 
         onAddBatch={handleAddBatch} 
-        theme={theme}
         fixedFrangos={fixedFrangos}
         setFixedFrangos={setFixedFrangos}
       />}
       
-      <div className={`min-h-screen font-sans transition-colors ${theme === 'light' ? 'bg-slate-100 text-slate-800' : 'bg-gray-900 text-gray-200'}`}>
+      <div className={`min-h-screen font-sans transition-colors bg-slate-100 text-slate-800`}>
         <main className="container mx-auto p-4 sm:p-6 lg:p-8">
           <header className="text-center mb-10 relative">
             <div className="mt-4 flex justify-center">
               <Image 
-                src={theme === 'light' ? '/GT PRETO.svg' : '/GT BRANCO.svg'}
+                src={'/GT PRETO.svg'}
                 alt="Logo Grupo Talento"
                 width={250}
                 height={250}
@@ -273,63 +256,60 @@ export default function Home() {
               />
             </div>
             
-            <p className={`text-lg mt-2 ${theme === 'light' ? 'text-slate-600' : 'text-gray-400'}`}>Calculadora Peso Frango</p>
-            <button onClick={toggleTheme} className={`absolute top-0 right-0 p-2 rounded-full transition-colors ${theme === 'light' ? 'text-slate-700 hover:bg-slate-200' : 'text-amber-400 hover:bg-gray-800'}`}>
-              {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-            </button>
+            <p className={`text-lg mt-2 text-slate-600`}>Calculadora Peso Frango</p>
             
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1">
-              <div className={`p-6 rounded-xl shadow-lg space-y-6 h-full transition-colors ${theme === 'light' ? 'bg-white' : 'bg-gray-800 border border-amber-500/20'}`}>
+              <div className={`p-6 rounded-xl shadow-lg space-y-6 h-full transition-colors bg-white`}>
                 {editingHistoryId && (
-                  <div className={`p-3 border-l-4 rounded-r-lg ${theme === 'light' ? 'bg-yellow-100 border-yellow-500 text-yellow-800' : 'bg-yellow-900/50 border-yellow-500 text-yellow-300'}`}>
+                  <div className={`p-3 border-l-4 rounded-r-lg bg-yellow-100 border-yellow-500 text-yellow-800`}>
                     <p className="font-bold">Modo de Edição</p>
                     <p className="text-sm">Você está editando um registro. Altere a lista, recalcule e atualize.</p>
                   </div>
                 )} 
                 <div>
-                  <label htmlFor="galpao" className={`block text-sm font-semibold mb-1 ${theme === 'light' ? 'text-slate-700' : 'text-gray-300'}`}>Galpão</label>
-                  <select id="galpao" value={galpao} onChange={(e) => setGalpao(e.target.value)} className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-2 transition-colors ${theme === 'light' ? 'border-slate-300 focus:ring-indigo-500' : 'bg-gray-900 border-gray-700 text-white focus:ring-amber-500'} disabled:bg-gray-700`} disabled={editingHistoryId !== null}>
+                  <label htmlFor="galpao" className={`block text-sm font-semibold mb-1 text-slate-700`}>Galpão</label>
+                  <select id="galpao" value={galpao} onChange={(e) => setGalpao(e.target.value)} className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-2 transition-colors border-slate-300 focus:ring-indigo-500 disabled:bg-slate-200 disabled:text-slate-500`} disabled={editingHistoryId !== null}>
                     {galpoes.map(g => <option key={g} value={g}>{g}</option>)}
                   </select>
                 </div>
                 <div className="flex-grow">
-                  <h3 className={`text-lg font-bold ${theme === 'light' ? 'text-slate-700' : 'text-gray-200'}`}>Sacos Adicionados</h3>
-                  <div className={`mt-2 space-y-2 max-h-60 overflow-y-auto border-dashed border-2 rounded-lg p-3 transition-colors ${theme === 'light' ? 'border-slate-300' : 'bg-gray-900/50 border-gray-700'}`}>
+                  <h3 className={`text-lg font-bold text-slate-700`}>Sacos Adicionados</h3>
+                  <div className={`mt-2 space-y-2 max-h-60 overflow-y-auto border-dashed border-2 rounded-lg p-3 transition-colors border-slate-300`}>
                     {pendingBatches.length === 0 ? (
                       <div className="text-center py-4"><p className="text-sm text-gray-500">Nenhum saco adicionado.</p></div>
                     ) : (
                       pendingBatches.map(batch => (
-                        <div key={batch.id} className={`flex justify-between items-center p-2.5 rounded-lg shadow-sm transition-colors ${theme === 'light' ? 'bg-slate-100' : 'bg-gray-800'}`}>
-                          <span className={`text-sm font-medium ${theme === 'light' ? 'text-slate-700' : 'text-gray-300'}`}>{batch.numFrangos} frangos, {batch.pesoTotalLote}kg</span>
+                        <div key={batch.id} className={`flex justify-between items-center p-2.5 rounded-lg shadow-sm transition-colors bg-slate-100`}>
+                          <span className={`text-sm font-medium text-slate-700`}>{batch.numFrangos} frangos, {batch.pesoTotalLote}kg</span>
                           <button onClick={() => handleRemoveBatch(batch.id)} className="text-gray-500 hover:text-red-500 transition-colors"><XIcon/></button>
                         </div>
                       ))
                     )}
                   </div>
-                  <button onClick={() => setAddModalOpen(true)} className={`w-full mt-2 flex items-center justify-center gap-2 border-2 border-dashed font-bold py-2 px-4 rounded-lg transition-colors ${theme === 'light' ? 'border-slate-400 text-slate-600 hover:bg-slate-50 hover:border-slate-500' : 'border-amber-500/50 text-amber-400 hover:bg-amber-500/10 hover:border-amber-500'}`}>
+                  <button onClick={() => setAddModalOpen(true)} className={`w-full mt-2 flex items-center justify-center gap-2 border-2 border-dashed font-bold py-2 px-4 rounded-lg transition-colors border-slate-400 text-slate-600 hover:bg-slate-50 hover:border-slate-500`}>
                     <PlusIcon /> Adicionar Saco
                   </button>
                 </div>
 
-                <button onClick={handleCalculate} className={`w-full font-bold py-3 px-4 rounded-lg shadow-md transition-all text-lg ${theme === 'light' ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-amber-500 text-black hover:bg-amber-400'}`}>
+                <button onClick={handleCalculate} className={`w-full font-bold py-3 px-4 rounded-lg shadow-md transition-all text-lg bg-indigo-600 text-white hover:bg-indigo-700`}>
                   Realizar Cálculo
                 </button>
 
                 {calculationResult && (
-                  <div className={`p-4 rounded-xl text-center space-y-2 transition-all duration-300 ${theme === 'light' ? 'bg-indigo-50 border-2 border-indigo-200' : 'bg-gray-900/50 border-2 border-amber-500/30'}`}>
-                    <h3 className={`text-xl font-bold ${theme === 'light' ? 'text-indigo-800' : 'text-amber-400'}`}>Resultado Final</h3>
-                    <p className={`text-5xl font-extrabold ${theme === 'light' ? 'text-indigo-600' : 'text-amber-300'}`}>{calculationResult.pesoMedio.toFixed(3)} kg</p>
-                    <p className={`text-sm ${theme === 'light' ? 'text-slate-600' : 'text-gray-400'}`}>(Total: {calculationResult.totalSacos} sacos, {calculationResult.totalPeso.toFixed(1)}kg / {calculationResult.totalFrangos} frangos)</p>
+                  <div className={`p-4 rounded-xl text-center space-y-2 transition-all duration-300 bg-indigo-50 border-2 border-indigo-200`}>
+                    <h3 className={`text-xl font-bold text-indigo-800`}>Resultado Final</h3>
+                    <p className={`text-5xl font-extrabold text-indigo-600`}>{calculationResult.pesoMedio.toFixed(3)} kg</p>
+                    <p className={`text-sm text-slate-600`}>(Total: {calculationResult.totalSacos} sacos, {calculationResult.totalPeso.toFixed(1)}kg / {calculationResult.totalFrangos} frangos)</p>
                     <button onClick={handleSaveOrUpdateHistory} className="w-full mt-2 bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-sm hover:bg-green-500">
                       {editingHistoryId ? 'Atualizar Registro' : 'Salvar no Histórico'}
                     </button>
                   </div>
                 )}
                 {editingHistoryId && (
-                  <button onClick={resetCalculatorState} className={`w-full text-center text-sm font-semibold underline ${theme === 'light' ? 'text-slate-600 hover:text-red-600' : 'text-gray-400 hover:text-red-500'}`}>
+                  <button onClick={resetCalculatorState} className={`w-full text-center text-sm font-semibold underline text-slate-600 hover:text-red-600`}>
                     Cancelar Edição
                   </button>
                 )}
@@ -337,29 +317,29 @@ export default function Home() {
               </div>
             </div>
 
-            <div className={`p-6 rounded-xl shadow-lg h-full transition-colors lg:col-span-2 ${theme === 'light' ? 'bg-white' : 'bg-gray-800 border border-amber-500/20'}`}>
-              <h2 className={`text-2xl font-bold mb-4 ${theme === 'light' ? 'text-slate-800' : 'text-gray-100'}`}>Histórico de Pesagens</h2>
-              {isLoading ? <p className={`text-center ${theme === 'light' ? 'text-slate-500' : 'text-gray-400'}`}>Carregando...</p> : history.length === 0 ? <p className={`text-center pt-4 ${theme === 'light' ? 'text-slate-500' : 'text-gray-500'}`}>Nenhum cálculo registrado.</p> : (
+            <div className={`p-6 rounded-xl shadow-lg h-full transition-colors lg:col-span-2 bg-white`}>
+              <h2 className={`text-2xl font-bold mb-4 text-slate-800`}>Histórico de Pesagens</h2>
+              {isLoading ? <p className={`text-center text-slate-500`}>Carregando...</p> : history.length === 0 ? <p className={`text-center pt-4 text-slate-500`}>Nenhum cálculo registrado.</p> : (
                 <div className="overflow-x-auto max-h-[75vh]">
                   <table className="min-w-full divide-y divide-gray-700">
-                    <thead className={`${theme === 'light' ? 'bg-slate-50' : 'bg-gray-900/50'} sticky top-0`}>
+                    <thead className={`bg-slate-50 sticky top-0`}>
                       <tr>
-                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider ${theme === 'light' ? 'text-slate-500' : 'text-amber-400'}`}>Data</th>
-                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider ${theme === 'light' ? 'text-slate-500' : 'text-amber-400'}`}>Galpão</th>
-                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider ${theme === 'light' ? 'text-slate-500' : 'text-amber-400'}`}>Peso Médio</th>
-                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider ${theme === 'light' ? 'text-slate-500' : 'text-amber-400'}`}>Detalhes</th>
-                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider ${theme === 'light' ? 'text-slate-500' : 'text-amber-400'}`}>Ações</th>
+                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500`}>Data</th>
+                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500`}>Galpão</th>
+                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500`}>Peso Médio</th>
+                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500`}>Detalhes</th>
+                        <th className={`px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500`}>Ações</th>
                       </tr>
                     </thead>
-                    <tbody className={`divide-y ${theme === 'light' ? 'bg-white divide-slate-200' : 'bg-gray-800 divide-gray-700'}`}>
+                    <tbody className={`divide-y bg-white divide-slate-200`}>
                       {history.slice().reverse().map((item) => (
-                        <tr key={item.id} className={`${theme === 'light' ? 'hover:bg-slate-50' : 'hover:bg-gray-700/50'} transition-colors`}>
+                        <tr key={item.id} className={`hover:bg-slate-50 transition-colors`}>
                           <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-400">{new Date(item.createdAt).toLocaleDateString()}</td>
-                          <td className={`px-5 py-4 whitespace-nowrap text-sm font-semibold ${theme === 'light' ? 'text-slate-800' : 'text-gray-200'}`}>{item.galpao}</td>
-                          <td className={`px-5 py-4 whitespace-nowrap text-sm font-bold ${theme === 'light' ? 'text-indigo-600' : 'text-amber-400'}`}>{item.pesoMedio.toFixed(3)}</td>
+                          <td className={`px-5 py-4 whitespace-nowrap text-sm font-semibold text-slate-800`}>{item.galpao}</td>
+                          <td className={`px-5 py-4 whitespace-nowrap text-sm font-bold text-indigo-600`}>{item.pesoMedio.toFixed(3)}</td>
                           <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-400">{`${item.numSacos} sacos, ${item.numFrangosPesados} frangos, ${item.pesoTotalFrangos.toFixed(1)}kg`}</td>
                           <td className="px-5 py-4 whitespace-nowrap text-sm flex items-center space-x-4">
-                            <button onClick={() => handleEdit(item)} className={`font-semibold flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed ${theme === 'light' ? 'text-indigo-600 hover:text-indigo-900' : 'text-amber-400 hover:text-amber-300'}`} disabled={!item.batches}>
+                            <button onClick={() => handleEdit(item)} className={`font-semibold flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed text-indigo-600 hover:text-indigo-900`} disabled={!item.batches}>
                               <PencilIcon />
                               Editar
                             </button>
