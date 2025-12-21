@@ -168,6 +168,11 @@ export default function Home() {
     setPendingBatches(prev => prev.filter(b => b.id !== id));
     setCalculationResult(null);
   };
+
+  const handleClearBags = () => {
+    setPendingBatches([]);
+    setCalculationResult(null);
+  };
   
   const handleCalculate = () => {
     if (pendingBatches.length === 0) {
@@ -276,7 +281,14 @@ export default function Home() {
                   </select>
                 </div>
                 <div className="flex-grow">
+                  <div className="flex justify-between items-center">
                   <h3 className={`text-lg font-bold text-slate-700`}>Sacos Adicionados</h3>
+                  {pendingBatches.length > 0 && (
+                    <button onClick={handleClearBags} className="text-sm font-semibold text-red-500 hover:text-red-700 transition-colors">
+                      Limpar Lista
+                    </button>
+                  )}
+                </div>
                   <div className={`mt-2 space-y-2 max-h-60 overflow-y-auto border-dashed border-2 rounded-lg p-3 transition-colors border-slate-300`}>
                     {pendingBatches.length === 0 ? (
                       <div className="text-center py-4"><p className="text-sm text-gray-500">Nenhum saco adicionado.</p></div>
